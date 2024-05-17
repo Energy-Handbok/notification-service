@@ -20,11 +20,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
+    public static final String EXCEPTION_MSG = "Exception: ";
+    public static final String SUCCESS_MSG = "Success";
+    public static final String USER_NOT_FOUND_MSG = "user not found";
+
     private final NotificationRepository notificationRepository;
     private final UserServiceCall userServiceCall;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
     @Override
     public ResponseObject<Object> getAll(int pageSize, int pageIndex, String userId) {
         Page<Notification> objListPage = null;
@@ -46,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
             pageIndex = 1;
         }
         return ResponseObject.builder()
-                .code(200).message("Success")
+                .code(200).message(SUCCESS_MSG)
                 .pageSize(objList.size()).pageIndex(pageIndex).totalPage(totalPage)
                 .data(objList)
                 .build();
@@ -67,7 +70,7 @@ public class NotificationServiceImpl implements NotificationService {
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: "+ e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -77,7 +80,7 @@ public class NotificationServiceImpl implements NotificationService {
         try{
             UserSystem userSystem = userServiceCall.getObject(object.getUserId());
             if(userSystem == null){
-                throw new Exception("user not found");
+                throw new Exception(USER_NOT_FOUND_MSG);
             }
             Notification notification = modelMapper.map(object, Notification.class);
             notification.setUserId(userSystem.getId());
@@ -86,13 +89,13 @@ public class NotificationServiceImpl implements NotificationService {
             notificationRepository.save(notification);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .data(notification)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -109,12 +112,12 @@ public class NotificationServiceImpl implements NotificationService {
             notificationRepository.save(object1);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -130,12 +133,12 @@ public class NotificationServiceImpl implements NotificationService {
             notificationRepository.save(object1);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
@@ -150,12 +153,12 @@ public class NotificationServiceImpl implements NotificationService {
             notificationRepository.delete(object);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_MSG + e.getMessage())
                     .build();
         }
     }
