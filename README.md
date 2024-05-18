@@ -5,7 +5,7 @@
 [![Java CI with Maven](https://github.com/Energy-Handbok/notification-service/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/Energy-Handbok/notification-service/actions/workflows/maven.yml)
 
 # Notification Service
-*Manage wallet & transaction*
+*Manage notification*
 
 👉 [JaCoCo Code Coverage Report](https://energy-handbok.github.io/jacoco-report/notification-service/site/jacoco/index.html) 🌱
 
