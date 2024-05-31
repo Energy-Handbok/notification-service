@@ -3,6 +3,7 @@ package com.khaphp.notificationservice.controller;
 import com.khaphp.common.dto.ResponseObject;
 import com.khaphp.notificationservice.dto.NotificationDTOcreate;
 import com.khaphp.notificationservice.dto.NotificationDTOupdate;
+import com.khaphp.notificationservice.dto.SeenParam;
 import com.khaphp.notificationservice.service.NotificationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,9 +54,9 @@ public class NotificationController {
         return ResponseEntity.badRequest().body(responseObject);
     }
 
-    @PutMapping("/seen/{notiId}")
-    public ResponseEntity<Object> updateObjectSeen(@PathVariable String notiId){
-        ResponseObject<Object> responseObject = notificationService.updateSeen(notiId);
+    @PutMapping("/seen")
+    public ResponseEntity<Object> updateObjectSeen(@RequestBody SeenParam seenParam){
+        ResponseObject<Object> responseObject = notificationService.updateSeen(seenParam.getNotiId());
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);
         }
